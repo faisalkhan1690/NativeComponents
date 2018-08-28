@@ -1,49 +1,45 @@
 import React, {Component} from 'react';
-import {StyleSheet,View,Text} from 'react-native';
+import PropTypes from 'prop-types';
+import { NavigatorIOS, Text, TouchableHighlight, View } from 'react-native';
 
 
 
 export default class NavigatorComponent extends Component {
-    static navigationOptions = ({ navigation }) => ({
-        title: 'NavigatorIOS',
-        headerTitleStyle: {
-            textAlign: 'left',
-            alignSelf: 'center',
-            fontSize: 20,
-            color: 'white',
-            flex:1
-        },
-        headerTintColor:'white',
-        headerStyle: {
-            height: 55,
-            backgroundColor: '#5D7ED3',
-        },
-        headerRight: (<View/>)
-    });
-
     render() {
         return (
-            <View style={styles.container}>
-                <Text style={styles.textStyle}> Hello</Text>
-            </View>
+          <NavigatorIOS
+            initialRoute={{
+              component: MyScene,
+              title: 'My Initial Scene',
+            }}
+            style={{flex: 1}}
+          />
         );
+      }
     }
-
     
+    class MyScene extends Component {
+      static propTypes = {
+        title: PropTypes.string.isRequired,
+        navigator: PropTypes.object.isRequired,
+      }
+    
+      _onForward = () => {
+        this.props.navigator.push({
+          title: 'Scene ' + nextIndex,
+        });
+      }
+    
+      render() {
+        return (
+          <View>
+            <Text>Current Scene: { this.props.title }</Text>
+            <TouchableHighlight onPress={this._onForward}>
+              <Text>Tap me to load the next scene</Text>
+            </TouchableHighlight>
+          </View>
+        )
+      }
 }
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      backgroundColor:'#fff'
-    },
-    textStyle:{
-      padding:10,
-      fontSize:16,
-      color:'#000',
-      borderWidth:0.2,
-      borderColor:'#ccc'
-    }
-  });
   
