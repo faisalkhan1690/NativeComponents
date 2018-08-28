@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet,View,Text} from 'react-native';
+import {StyleSheet,View,Text,DatePickerIOS} from 'react-native';
 
 
 
@@ -21,13 +21,27 @@ export default class DatePickerComponent extends Component {
         headerRight: (<View/>)
     });
 
-    render() {
+    constructor(props) {
+        super(props);
+        this.state = { chosenDate: new Date() };
+    
+        this.setDate = this.setDate.bind(this);
+      }
+    
+      setDate(newDate) {
+        this.setState({chosenDate: newDate})
+      }
+    
+      render() {
         return (
-            <View style={styles.container}>
-                <Text style={styles.textStyle}> Hello</Text>
-            </View>
-        );
-    }
+          <View style={styles.container}>
+            <DatePickerIOS
+              date={this.state.chosenDate}
+              onDateChange={this.setDate}
+            />
+          </View>
+        )
+      }
 
     
 }
@@ -37,13 +51,6 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       backgroundColor:'#fff'
-    },
-    textStyle:{
-      padding:10,
-      fontSize:16,
-      color:'#000',
-      borderWidth:0.2,
-      borderColor:'#ccc'
     }
   });
   
