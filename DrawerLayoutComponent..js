@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet,View,Text} from 'react-native';
+import {StyleSheet,View,Text,DrawerLayoutAndroid,Image,TouchableOpacity,Button} from 'react-native';
 
 
 
@@ -18,17 +18,75 @@ export default class DrawerLayoutComponent extends Component {
             height: 55,
             backgroundColor: '#5D7ED3',
         },
+        headerLeft: (
+            <TouchableOpacity onPress={()=>{
+                if(_this._isOpen){
+                    _this.closeDrawer()
+                }else
+                    _this.openDrawer()
+                }
+                }>
+            <View>
+            <Image
+                style={{width: 30, height: 30,marginLeft:10}}
+                source={require('/home/user/Work/training/NativeComponents/menu_icon.png')}
+                />
+            </View>
+        </TouchableOpacity>),
+
         headerRight: (<View/>)
     });
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text style={styles.textStyle}> Hello</Text>
-            </View>
-        );
+    _this;
+    _isOpen=false;
+
+
+    componentDidMount(){
+        _this=this;
+       
     }
 
+    openDrawer(){
+        this.DrawerLayoutRef.openDrawer();
+        this._isOpen=!this._isOpen
+
+    }
+
+    closeDrawer(){
+        this.DrawerLayoutRef.closeDrawer();
+        this._isOpen=!this._isOpen
+    }
+
+    render() {
+        var navigationView=(
+            <View>
+              <Text style={styles.textStyle}>Menu One</Text>
+              <Text style={styles.textStyle}>Menu Two</Text>
+              <Text style={styles.textStyle}>Menu three</Text>
+              <Text style={styles.textStyle}>Mneu four</Text>
+            </View>
+        )
+
+       return (
+            <DrawerLayoutAndroid
+              ref={ref => (this.DrawerLayoutRef = ref)}
+              drawerWidth={200}
+              drawerPosition={DrawerLayoutAndroid.positions.Left}
+              renderNavigationView={() => navigationView}>
+
+              <View style={{flex: 1, alignItems: 'center',marginTop:100}}>
+                <Button
+                    title="I am in main page"
+                    color="#841584"
+                    accessibilityLabel="I am in main page"
+                />
+              </View>
+            </DrawerLayoutAndroid>
+          );
+      }
+    
+
+  
     
 }
 
@@ -39,11 +97,11 @@ const styles = StyleSheet.create({
       backgroundColor:'#fff'
     },
     textStyle:{
-      padding:10,
-      fontSize:16,
-      color:'#000',
-      borderWidth:0.2,
-      borderColor:'#ccc'
-    }
+        padding:10,
+        fontSize:14,
+        color:'#4a4a4a',
+        borderWidth:0.3,
+        borderColor:'#ccc'
+      },
   });
   
