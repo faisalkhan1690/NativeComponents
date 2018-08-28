@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet,View,Text} from 'react-native';
+import {StyleSheet,View,Text,SectionList} from 'react-native';
 
 
 
@@ -21,13 +21,49 @@ export default class SectionListComponent extends Component {
         headerRight: (<View/>)
     });
 
+
+    listData=[
+        {title: 'Gender', data: ['Male', 'Female']},
+        {title: 'Food', data: ['Veg', 'Non Veg','Both']},
+        {title: 'Session', data: ['Morning', 'Afternoon','Evening','Night']},
+
+    ];
+
+
+    componentDidMount(){
+        //uncomment to test scrollToLocation method
+        // setTimeout( () => {
+        //    this.scrollToSection();
+        //  },2000);
+    }
+    scrollToSection = () => {
+        this.sectionListRef.scrollToLocation({
+          animated: true,
+          sectionIndex: 2,
+          itemIndex: 0,
+          viewPosition: 0
+        });
+      };
+
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.textStyle}> Hello</Text>
+               <SectionList
+                     ref={ref => (this.sectionListRef = ref)}
+                    sections={this.listData}
+                    renderItem={({item, index}) => 
+                        <Text style={styles.textStyle} key={index}>{item}</Text>
+                    }
+                    renderSectionHeader={({section: {title}}) => (
+                        <Text style={styles.textHeadingStyle}>{title}</Text>
+                    )}
+                    
+                />
             </View>
         );
     }
+
+   
 
     
 }
@@ -40,10 +76,17 @@ const styles = StyleSheet.create({
     },
     textStyle:{
       padding:10,
-      fontSize:16,
-      color:'#000',
-      borderWidth:0.2,
+      fontSize:14,
+      color:'#4a4a4a',
+      borderWidth:0.3,
       borderColor:'#ccc'
-    }
+    },
+    textHeadingStyle:{
+        padding:10,
+        fontSize:16,
+        color:'#fff',
+        fontWeight: 'bold',
+        backgroundColor:'#bdba00'
+      }
   });
   
