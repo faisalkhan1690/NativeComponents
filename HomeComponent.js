@@ -11,7 +11,7 @@ import {FlatList, StyleSheet, TouchableOpacity, View,Text} from 'react-native';
 
 
 
-export default class App extends Component {
+export default class HomeComponent extends Component {
 
     static navigationOptions = ({ navigation }) => ({
         title: 'Home',
@@ -30,18 +30,14 @@ export default class App extends Component {
         headerRight: (<View/>)
     });
 
-  listData=[
-    {itemValue:'SectionList',itemKey:0},
-    {itemValue:'DrawerLayoutAndroid',itemKey:1},
-    {itemValue:'DatePickerIOS',itemKey:2},
-    {itemValue:'NavigatoriOS',itemKey:3}];
+  listData=require('/home/user/Work/training/NativeComponents/listData.json')
 
 
   render() {
     return (
       <View style={styles.container}>
        <FlatList
-          data={this.listData}
+          data={this.listData.dataList}
           renderItem={({item}) => this._getItemView(item)}
         />
       </View>
@@ -60,25 +56,36 @@ export default class App extends Component {
         )
   }
 
+
+  _showAlert(text){
+      alert(text)
+
+  }
+
   _onSelection(itemKey){
       switch (itemKey) {
           case 0:
-              this.props.navigation.navigate('SectionListComponent');
+              this.props.navigation.navigate('Button',{data:"I am coming from Home",_showAlert:this._showAlert.bind(this)});
               break;
           case 1:
-                this.props.navigation.navigate('DrawerLayoutComponent');
+              this.props.navigation.navigate('SectionList');
               break;
           case 2:
-                this.props.navigation.navigate('DatePickerComponent');
+              this.props.navigation.navigate('DrawerLayout');
               break;
           case 3:
-                this.props.navigation.navigate('NavigatorComponent');
+              this.props.navigation.navigate('DatePicker');
               break;
-        default:
-            console.warn("default")
+          case 4:
+              this.props.navigation.navigate('Navigator');
+              break;
+          default:
+              console.warn("default")
       }
   }
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

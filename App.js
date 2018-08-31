@@ -8,11 +8,13 @@
 
 import React, {Component}from 'react';
 import { createStackNavigator } from 'react-navigation';
-import Home from './Home';
+import HomeComponent from './HomeComponent';
 import SectionListComponent from './SectionListComponent';
 import DrawerLayoutComponent from './DrawerLayoutComponent.';
 import DatePickerComponent from './DatePickerComponent';
 import NavigatorComponent from './NavigatorComponent';
+import ButtonComponent from './ButtonComponent';
+
 
 
 
@@ -24,18 +26,21 @@ export default class App extends Component {
 
 const RootStack = createStackNavigator({
   Home: {
-    screen: Home
+    screen: HomeComponent
   },
-  SectionListComponent: {
+  Button: {
+    screen: ButtonComponent
+  },
+  SectionList: {
     screen: SectionListComponent
   },
-  DrawerLayoutComponent: {
+  DrawerLayout: {
     screen: DrawerLayoutComponent
   },
-  DatePickerComponent: {
+  DatePicker: {
     screen: DatePickerComponent
   },
-  NavigatorComponent: {
+  Navigator: {
     screen: NavigatorComponent
   }
 });

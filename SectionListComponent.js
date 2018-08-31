@@ -23,15 +23,15 @@ export default class SectionListComponent extends Component {
 
 
     listData=[
-        {title: 'Gender', data: ['Male', 'Female']},
-        {title: 'Food', data: ['Veg', 'Non Veg','Both']},
-        {title: 'Session', data: ['Morning', 'Afternoon','Evening','Night']},
+        {title: 'Gender', data: ['Male', 'Female'],visible:false},
+        {title: 'Food', data: ['Veg', 'Non Veg','Both'],visible:true},
+        {title: 'Session', data: ['Morning', 'Afternoon','Evening','Night'],visible:false},
 
     ];
 
 
     componentDidMount(){
-        //uncomment to test scrollToLocation method
+        // uncomment to test scrollToLocation method
         // setTimeout( () => {
         //    this.scrollToSection();
         //  },2000);
@@ -39,7 +39,7 @@ export default class SectionListComponent extends Component {
     scrollToSection = () => {
         this.sectionListRef.scrollToLocation({
           animated: true,
-          sectionIndex: 2,
+          sectionIndex: 3,
           itemIndex: 0,
           viewPosition: 0
         });
@@ -51,9 +51,7 @@ export default class SectionListComponent extends Component {
                <SectionList
                      ref={ref => (this.sectionListRef = ref)}
                     sections={this.listData}
-                    renderItem={({item, index}) => 
-                        <Text style={styles.textStyle} key={index}>{item}</Text>
-                    }
+                    renderItem={({item, index,section}) => this.renderItem(item, index,section)}
                     renderSectionHeader={({section: {title}}) => (
                         <Text style={styles.textHeadingStyle}>{title}</Text>
                     )}
@@ -63,9 +61,13 @@ export default class SectionListComponent extends Component {
         );
     }
 
-   
-
-    
+    renderItem(item, index,section){
+        if(section.visible){
+            return(<Text style={styles.textStyle} key={index}>{item+"/"+index+"/"+section.visible}</Text>)
+        }else{
+            return( <View></View>);
+        }
+    }    
 }
 
 const styles = StyleSheet.create({
